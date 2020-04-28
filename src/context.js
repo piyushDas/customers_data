@@ -13,8 +13,15 @@ export const AppState = ({ children }) => {
   const [addresses, setAddressesData] = useState([])
   const urlPrefix = 'http://localhost:3012'
 
+  const isLocal = () => {
+    if (window.location.href.indexOf('localhost') > -1) {
+      return true
+    }
+    return false
+  }
+
   const fetchCustomers = () => {
-    const apiUrl = `${urlPrefix}/conviva_v1/fetchAllCustomers`
+    const apiUrl = `${isLocal() ? urlPrefix: ''}/conviva_v1/fetchAllCustomers`
     appAxiosInstance(apiUrl, 'get')
       .then(res => {
         if (res &&
